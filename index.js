@@ -4,6 +4,7 @@ import Map from '@arcgis/core/Map.js';
 import MapView from '@arcgis/core/views/MapView.js';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js';
 
+// Script
 const commFires = new FeatureLayer({
     url: "https://services1.arcgis.com/z5tlnpYHokW9isdE/arcgis/rest/services/community_fire_submissions/FeatureServer/0"
 });
