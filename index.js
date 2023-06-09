@@ -3,6 +3,7 @@
 import Map from '@arcgis/core/Map.js';
 import MapView from '@arcgis/core/views/MapView.js';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js';
+import BasemapToggle from "@arcgis/core/widgets/BasemapToggle.js";
 
 // Script
 const commFires = new FeatureLayer({
@@ -24,6 +25,13 @@ const view = new MapView({
     zoom: 5,
     container: "viewDiv"
 });
+
+const basemapToggle = new BasemapToggle({
+    view: view,
+    nextBasemap: "satellite"
+  });
+  
+view.ui.add(basemapToggle, "top-left");
 
 view.when(() => {
     console.log('view ready');
