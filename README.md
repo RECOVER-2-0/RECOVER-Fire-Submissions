@@ -14,4 +14,4 @@ Web mapping application allowing users to submit fires for inclusion in NASA REC
     - [ ] Additional layers
     - [ ] Fly-out menus
     - [ ] Branding: ISU, NASA, USDA (GTAC)
-- [ ] Establish GitHub Pages site
+- [x] ~~Establish GitHub Pages site~~ These only host static HTML; you'll need to include node modules for it to work properly
