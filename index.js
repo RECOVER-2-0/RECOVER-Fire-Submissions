@@ -3,7 +3,9 @@
 import Map from '@arcgis/core/Map.js';
 import MapView from '@arcgis/core/views/MapView.js';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js';
+import Home from "@arcgis/core/widgets/Home.js";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle.js";
+import Search from "@arcgis/core/widgets/Search.js";
 
 // Script
 const commFires = new FeatureLayer({
@@ -31,7 +33,31 @@ const basemapToggle = new BasemapToggle({
     nextBasemap: "satellite"
   });
   
-view.ui.add(basemapToggle, "top-left");
+view.ui.add(basemapToggle, {
+    position: "top-left",
+    index: 2
+});
+
+const homeWidget = new Home({
+    view: view
+});
+
+// TODO: figure out how to just add stuff all at once
+// instead of needing to view.ui.add() everytime
+view.ui.add(homeWidget, {
+    position: "top-left",
+    index: 1
+});
+
+// TODO: configure search for layers in map
+const searchWidget = new Search({
+    view: view
+});
+
+view.ui.add(searchWidget, {
+    position: "top-left",
+    index: 3
+});
 
 view.when(() => {
     console.log('view ready');
