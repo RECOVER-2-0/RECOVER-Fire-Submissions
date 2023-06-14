@@ -28,14 +28,16 @@ const view = new MapView({
     container: "viewDiv"
 });
 
+view.ui.move("zoom", "top-right");
+
 const basemapToggle = new BasemapToggle({
     view: view,
     nextBasemap: "satellite"
   });
   
 view.ui.add(basemapToggle, {
-    position: "top-left",
-    index: 2
+    position: "top-right",
+    index: 0
 });
 
 const homeWidget = new Home({
@@ -45,7 +47,7 @@ const homeWidget = new Home({
 // TODO: figure out how to just add stuff all at once
 // instead of needing to view.ui.add() everytime
 view.ui.add(homeWidget, {
-    position: "top-left",
+    position: "top-right",
     index: 1
 });
 
