@@ -1,6 +1,6 @@
 
 // Imports
-import Map from '@arcgis/core/Map.js';
+import WebMap from "@arcgis/core/WebMap.js";
 import MapView from '@arcgis/core/views/MapView.js';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js';
 import Home from "@arcgis/core/widgets/Home.js";
@@ -12,17 +12,14 @@ const commFires = new FeatureLayer({
     url: "https://services1.arcgis.com/z5tlnpYHokW9isdE/arcgis/rest/services/community_fire_submissions/FeatureServer/0"
 });
 
-const recoverFires = new FeatureLayer({
-    url: "https://services1.arcgis.com/z5tlnpYHokW9isdE/arcgis/rest/services/RECOVER_Fires/FeatureServer"
-});
-
-const map = new Map({
-    basemap: "topo",
-    layers: [commFires, recoverFires]
+const webmap = new WebMap({
+    portalItem: { // autocasts as new PortalItem()
+      id: "72e8ab3919ad4f56ba0ab7abbe3aafae"
+    }
 });
 
 const view = new MapView({
-    map: map,
+    map: webmap,
     center: [-112.5, 40.5],
     zoom: 5,
     container: "viewDiv"
