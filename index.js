@@ -5,6 +5,7 @@ import MapView from '@arcgis/core/views/MapView.js';
 import Home from "@arcgis/core/widgets/Home.js";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle.js";
 import Legend from "@arcgis/core/widgets/Legend.js";
+import Expand from "@arcgis/core/widgets/Expand.js";
 
 // Script
 const webmap = new WebMap({
@@ -44,12 +45,19 @@ view.ui.add(homeWidget, {
 });
 
 const recLegend = new Legend({
+    container: document.createElement("div"),
     view: view
 });
 
-view.ui.add(recLegend, {
-    position: "bottom-right"
+const legendExpand = new Expand({
+    expandIcon: "legend", 
+    expandTooltip: "Expand Legend",
+    expanded: true, 
+    view: view, 
+    content: recLegend
 });
+
+view.ui.add(legendExpand, "bottom-right");
 
 view.when(() => {
     console.log('view ready');
