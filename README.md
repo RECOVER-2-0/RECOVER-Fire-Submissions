@@ -9,7 +9,7 @@ Web mapping application allowing users to submit fires for inclusion in NASA REC
 - [ ] Enable pop-ups 
 - [ ] Search and zoom to existing fires
 - [ ] Cluster centroids
-- [ ] Layer controls widget
+- [x] Layer controls widget
 - [x] Basemap widget
 - [ ] Other general design considerations
     - [ ] Additional layers
