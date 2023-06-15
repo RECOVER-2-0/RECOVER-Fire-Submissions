@@ -5,6 +5,8 @@ import MapView from '@arcgis/core/views/MapView.js';
 import Home from "@arcgis/core/widgets/Home.js";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle.js";
 import Legend from "@arcgis/core/widgets/Legend.js";
+import Search from "@arcgis/core/widgets/Search.js";
+import LayerList from "@arcgis/core/widgets/LayerList.js";
 import Expand from "@arcgis/core/widgets/Expand.js";
 
 // Script
@@ -58,6 +60,32 @@ const legendExpand = new Expand({
 });
 
 view.ui.add(legendExpand, "bottom-right");
+
+//new stuff
+let search = new Search({
+    container: document.createElement("div"),
+    view: view
+});
+
+let lyrList = new LayerList({
+    container: document.createElement("div"),
+    view: view
+});
+
+let expand1 = new Expand({
+    view: view,
+    content: search,
+    expandIcon: "search",
+    group: "top-left"
+  });
+let expand2 = new Expand({
+    view: view,
+    content: lyrList,
+    expandIcon: "legend-plus",
+    group: "top-left"
+  });
+  
+view.ui.add([expand1, expand2], "top-left");
 
 view.when(() => {
     console.log('view ready');
