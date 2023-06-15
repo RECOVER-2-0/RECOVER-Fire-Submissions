@@ -8,6 +8,7 @@ import Legend from "@arcgis/core/widgets/Legend.js";
 import Search from "@arcgis/core/widgets/Search.js";
 import LayerList from "@arcgis/core/widgets/LayerList.js";
 import Expand from "@arcgis/core/widgets/Expand.js";
+import Editor from "@arcgis/core/widgets/Editor.js";
 
 // Script
 const webmap = new WebMap({
@@ -72,20 +73,32 @@ let lyrList = new LayerList({
     view: view
 });
 
+let submissionEditor = new Editor({
+    container: document.createElement("div"),
+    view: view,
+    icon: "layers-editable"
+});
+
 let expand1 = new Expand({
     view: view,
     content: search,
     expandIcon: "search",
     group: "top-left"
-  });
+});
 let expand2 = new Expand({
     view: view,
     content: lyrList,
     expandIcon: "legend-plus",
     group: "top-left"
-  });
+});
+let expand3 = new Expand({
+    view: view,
+    content: submissionEditor,
+    expandIcon: "layers-editable",
+    group: "top-left"
+});
   
-view.ui.add([expand1, expand2], "top-left");
+view.ui.add([expand1, expand2, expand3], "top-left");
 
 view.when(() => {
     console.log('view ready');
