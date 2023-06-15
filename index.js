@@ -4,6 +4,7 @@ import WebMap from "@arcgis/core/WebMap.js";
 import MapView from '@arcgis/core/views/MapView.js';
 import Home from "@arcgis/core/widgets/Home.js";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle.js";
+import Legend from "@arcgis/core/widgets/Legend.js";
 
 // Script
 const webmap = new WebMap({
@@ -40,6 +41,14 @@ const homeWidget = new Home({
 view.ui.add(homeWidget, {
     position: "top-right",
     index: 1
+});
+
+const recLegend = new Legend({
+    view: view
+});
+
+view.ui.add(recLegend, {
+    position: "bottom-right"
 });
 
 view.when(() => {
