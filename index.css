@@ -25,14 +25,14 @@ body
 #viewDiv {
   padding: 0;
   margin: 0;
-  height: calc(100% - 49px);
+  height: 100%;
   width: 100%;
 }
 #sidebar {
   z-index: 99;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   width: 320px;
@@ -43,6 +43,11 @@ body
   padding: 3%;
 }
 
+#text, h1 img {
+    height: 40px;
+    margin: 0 8px 0 8px;
+
+}
  /* Style the button that is used to open and close the collapsible content */
  .collapsible {
   background-color: #eee;
