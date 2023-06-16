@@ -37,6 +37,7 @@ body
  /* Style the button that is used to open and close the collapsible content */
  .collapsible {
   background-color: #eee;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   color: #444;
   cursor: pointer;
   padding: 18px;
