@@ -61,10 +61,12 @@ const legendExpand = new Expand({
 
 view.ui.add(legendExpand, "bottom-right");
 
-// let search = new Search({
-//     container: document.createElement("div"),
-//     view: view
-// });
+let search = new Search({
+    container: document.getElementById("searchDiv"),
+    view: view
+});
+
+view.ui.add(document.getElementById("sidebar"), "left");
 
 // let lyrList = new LayerList({
 //     container: document.createElement("div"),
