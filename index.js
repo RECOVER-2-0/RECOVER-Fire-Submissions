@@ -62,42 +62,42 @@ const legendExpand = new Expand({
 
 view.ui.add(legendExpand, "bottom-right");
 
-let search = new Search({
-    container: document.createElement("div"),
-    view: view
-});
+// let search = new Search({
+//     container: document.createElement("div"),
+//     view: view
+// });
 
-let lyrList = new LayerList({
-    container: document.createElement("div"),
-    view: view
-});
+// let lyrList = new LayerList({
+//     container: document.createElement("div"),
+//     view: view
+// });
 
-let submissionEditor = new Editor({
-    container: document.createElement("div"),
-    view: view,
-    icon: "layers-editable"
-});
+// let submissionEditor = new Editor({
+//     container: document.createElement("div"),
+//     view: view,
+//     icon: "layers-editable"
+// });
 
-let expand1 = new Expand({
-    view: view,
-    content: search,
-    expandIcon: "search",
-    group: "top-left"
-});
-let expand2 = new Expand({
-    view: view,
-    content: lyrList,
-    expandIcon: "legend-plus",
-    group: "top-left"
-});
-let expand3 = new Expand({
-    view: view,
-    content: submissionEditor,
-    expandIcon: "layers-editable",
-    group: "top-left"
-});
+// let expand1 = new Expand({
+//     view: view,
+//     content: search,
+//     expandIcon: "search",
+//     group: "top-left"
+// });
+// let expand2 = new Expand({
+//     view: view,
+//     content: lyrList,
+//     expandIcon: "legend-plus",
+//     group: "top-left"
+// });
+// let expand3 = new Expand({
+//     view: view,
+//     content: submissionEditor,
+//     expandIcon: "layers-editable",
+//     group: "top-left"
+// });
   
-view.ui.add([expand1, expand2, expand3], "top-left");
+// view.ui.add([expand1, expand2, expand3], "top-left");
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
