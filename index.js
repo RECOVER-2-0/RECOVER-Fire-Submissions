@@ -55,7 +55,6 @@ const recLegend = new Legend({
 const legendExpand = new Expand({
     expandIcon: "legend", 
     expandTooltip: "Expand Legend",
-    expanded: true, 
     view: view, 
     content: recLegend
 });
