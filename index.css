@@ -21,6 +21,7 @@ body
   left: 0;
   display: block;
   overflow: auto;
+  overflow-x: hidden;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   width: 320px;
