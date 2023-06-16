@@ -62,7 +62,6 @@ const legendExpand = new Expand({
 
 view.ui.add(legendExpand, "bottom-right");
 
-//new stuff
 let search = new Search({
     container: document.createElement("div"),
     view: view
@@ -99,6 +98,21 @@ let expand3 = new Expand({
 });
   
 view.ui.add([expand1, expand2, expand3], "top-left");
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+} 
 
 view.when(() => {
     console.log('view ready');
