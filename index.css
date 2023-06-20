@@ -28,3 +28,15 @@ body
   height: calc(100% - 49px);
   width: 100%;
 }
+
+#infoDiv {
+    width: 300px;
+    background-color: white;
+    padding: 10px;
+}
+#infoDiv h1 {
+    font-size: 16px;
+}
+#infoDiv p {
+    font-style: italic;
+}

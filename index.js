@@ -60,9 +60,7 @@ const recLegend = new Legend({
 });
 
 const legendExpand = new Expand({
-    expandIcon: "legend", 
-    expandTooltip: "Expand Legend",
-    expanded: true, 
+    expandTooltip: "Expand Legend", 
     view: view, 
     content: recLegend
 });
@@ -83,29 +81,37 @@ let lyrList = new LayerList({
 let submissionEditor = new Editor({
     container: document.createElement("div"),
     view: view,
-    icon: "layers-editable"
 });
 
 let expand1 = new Expand({
     view: view,
     content: search,
-    expandIcon: "search",
     group: "top-left"
 });
 let expand2 = new Expand({
     view: view,
     content: lyrList,
-    expandIcon: "legend-plus",
     group: "top-left"
 });
 let expand3 = new Expand({
     view: view,
     content: submissionEditor,
-    expandIcon: "layers-editable",
     group: "top-left"
 });
+
   
 view.ui.add([expand1, expand2, expand3], "top-left");
+
+const instructions = new Expand({
+    expandIcon: "esri-icon-comment",
+    expandTooltip: "Expand Me!",
+    collapseTooltip: "Collapse Me!",
+    expanded: true,
+    view: view,
+    content: document.getElementById("infoDiv")
+});
+
+view.ui.add(instructions, "bottom-left");
 
 view.when(() => {
     console.log('view ready');
