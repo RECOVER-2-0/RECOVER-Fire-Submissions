@@ -35,7 +35,7 @@ view.ui.move("zoom", "top-right");
 
 const basemapToggle = new BasemapToggle({
     view: view,
-    nextBasemap: "topo"
+    nextBasemap: "satellite"
   });
   
 view.ui.add(basemapToggle, {
