@@ -65,7 +65,7 @@ const legendExpand = new Expand({
     content: recLegend
 });
 
-view.ui.add(legendExpand, "bottom-right");
+view.ui.add(legendExpand, "bottom-left");
 
 //new stuff
 let search = new Search({
@@ -103,14 +103,14 @@ let expand3 = new Expand({
 view.ui.add([expand1, expand2, expand3], "top-left");
 
 const instructions = new Expand({
-    expandIcon: "download",
+    expandIcon: "information",
     expandTooltip: "Expand Me!",
     collapseTooltip: "Collapse Me!",
     view: view,
     content: document.getElementById("infoDiv")
 });
 
-view.ui.add(instructions, "bottom-left");
+view.ui.add(instructions, "bottom-right");
 
 view.when(() => {
     console.log('view ready');
