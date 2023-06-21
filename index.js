@@ -125,9 +125,9 @@ let expand3 = new Expand({
 view.ui.add([expand1, expand2, expand3], "top-left");
 
 const instructions = new Expand({
-    expandIcon: "information",
-    expandTooltip: "Expand Me!",
-    collapseTooltip: "Collapse Me!",
+    expandIconClass: "esri-icon-question", // This property is deprecated in 4.27
+    expandTooltip: "Expand Instructions",
+    collapseTooltip: "Collapse Instructions",
     view: view,
     content: document.getElementById("infoDiv")
 });
