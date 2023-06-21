@@ -103,10 +103,9 @@ let expand3 = new Expand({
 view.ui.add([expand1, expand2, expand3], "top-left");
 
 const instructions = new Expand({
-    expandIcon: "esri-icon-comment",
+    expandIcon: "download",
     expandTooltip: "Expand Me!",
     collapseTooltip: "Collapse Me!",
-    expanded: true,
     view: view,
     content: document.getElementById("infoDiv")
 });
