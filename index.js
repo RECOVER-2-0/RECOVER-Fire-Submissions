@@ -132,7 +132,23 @@ const instructions = new Expand({
     content: document.getElementById("infoDiv")
 });
 
-view.ui.add(instructions, "bottom-right");
+const aboutInfo = new Expand({
+    expandIconClass: "esri-icon-description",
+    expandTooltip: "Expand About",
+    collapseTooltip: "Collapse About",
+    view: view,
+    content: document.getElementById("aboutDiv")
+});
+
+view.ui.add(instructions, {
+    position: "bottom-right",
+    index: 0
+});
+
+view.ui.add(aboutInfo, {
+    position: "bottom-right",
+    index: 1
+});
 
 view.when(() => {
     console.log('view ready');

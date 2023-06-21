@@ -29,14 +29,14 @@ body
   width: 100%;
 }
 
-#infoDiv {
+#infoDiv, #aboutDiv {
     width: 300px;
     background-color: white;
     padding: 10px;
 }
-#infoDiv h1 {
+#infoDiv, #aboutDiv h1 {
     font-size: 16px;
 }
-#infoDiv p {
+/* #infoDiv, #aboutDiv p {
     font-style: italic;
-}
+} */
