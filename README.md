@@ -5,9 +5,9 @@ Web mapping application allowing users to submit fires for inclusion in NASA REC
 ## To Do
 - [ ] ~~Add header bar with title~~ and links to other RECOVER products
 - [x] Separate CSS and JS from HTML
-- [ ] Add instructions for fire submissions
+- [x] Add instructions for fire submissions
 - [ ] Enable pop-ups 
-- [ ] Search and zoom to existing fires
+- [x] Search and zoom to existing fires
 - [ ] Cluster centroids
 - [x] Layer controls widget
 - [x] Basemap widget
