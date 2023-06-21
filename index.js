@@ -68,9 +68,31 @@ const legendExpand = new Expand({
 view.ui.add(legendExpand, "bottom-left");
 
 //new stuff
-let search = new Search({
+const search = new Search({
     container: document.createElement("div"),
-    view: view
+    view: view,
+    allPlaceholder: "Search RECOVER fires, submitted fires, or location",
+    includeDefaultSources: true, // to include Esri geocoder
+    sources: [
+        {
+            layer: recoverFires,
+            searchFields: ["poly_IncidentName", "irwin_UniqueFireIdentifier"], // Note: Cannot use field aliases nor "*" wildcard for searchFields
+            suggestionTemplate: "{poly_IncidentName} ({irwin_UniqueFireIdentifier})",
+            exactMatch: false,
+            outFields: ["*"],
+            placeholder: "Search RECOVER fires",
+            name: "RECOVER Fires"
+        },
+        {
+            layer: commFires,
+            searchFields: ["Fire_Name", "Unique_ID"],
+            suggestionTemplate: "{Fire_Name} ({Unique_ID})",
+            exactMatch: false,
+            outFields: ["*"],
+            placeholder: "Search submitted fires",
+            name: "Submitted Fires"
+        }
+    ]
 });
 
 let lyrList = new LayerList({
