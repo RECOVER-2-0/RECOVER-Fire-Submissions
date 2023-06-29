@@ -117,21 +117,21 @@ const view = new MapView({
 
 view.when(() => {
     view.map.loadAll().then(() => {
-    view.map.editableLayers.forEach((layer) => {
-        // Grab comm fires from web map and set form template
-        if (layer.type === "feature" && layer.title === "Community Fire Submissions") {
-        layer.formTemplate = fireFormTemplate;
-        }
-    });
+        view.map.editableLayers.forEach((layer) => {
+            // Grab comm fires from web map and set form template
+            if (layer.type === "feature" && layer.title === "Community Fire Submissions") {
+                layer.formTemplate = fireFormTemplate;
+            }
+        });
     });
     
     const editor = new Editor({
-    view: view,
-    supportingWidgetDefaults: {
-        featureForm: {
-        groupDisplay: "sequential"
+        view: view,
+        supportingWidgetDefaults: {
+            featureForm: {
+                groupDisplay: "sequential"
+            }
         }
-    }
     });
     
     view.ui.add(editor, "top-right");
