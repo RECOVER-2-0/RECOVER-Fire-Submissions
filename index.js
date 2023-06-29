@@ -9,9 +9,6 @@ import FormTemplate from "@arcgis/core/form/FormTemplate.js";
 import GroupElement from "@arcgis/core/form/elements/GroupElement.js";
 import FieldElement from "@arcgis/core/form/elements/FieldElement.js";
 
-// Config
-// esriConfig.apiKey = "AAPK423affd003ff4318b71f02e00fc6a3acnZSab_6W0_qFoTc7xiALo9tGF8k8TsK-LAI8a0-U5mIWjvv1Pn6f19gO_oO4gk6U";
-
 // Set expressionInfos for fire form Template
 const stateExpression = new ExpressionInfo({
     expression: document.getElementById("state").text,
@@ -40,8 +37,8 @@ const stateFieldElement = new FieldElement({
     editable: false,
     fieldName: "State",
     input: {
-    type: "text-box",
-    minLength: 0
+        type: "text-box",
+        minLength: 0
     },
     valueExpression: stateExpression.name
 });
@@ -51,8 +48,8 @@ const cityFieldElement = new FieldElement({
     editable: false,
     fieldName: "City",
     input: {
-    type: "text-box",
-    minLength: 0
+        type: "text-box",
+        minLength: 0
     },
     valueExpression: nearCityExpression.name
 });
@@ -62,9 +59,9 @@ const fireNameFieldElement = new FieldElement({
     editable: true,
     fieldName: "Fire_Name",
     input: {
-    type: "text-box",
-    minLength: 0,
-    maxLength: 255
+        type: "text-box",
+        minLength: 0,
+        maxLength: 255
     }
 });
 
@@ -73,8 +70,8 @@ const uidFieldElement = new FieldElement({
     editable: false, 
     fieldName: "Unique_ID",
     input: {
-    type: "text-box",
-    minLength: 0
+        type: "text-box",
+        minLength: 0
     },
     valueExpression: uidExpression.name
 });
@@ -104,7 +101,7 @@ const fireFormTemplate = new FormTemplate({
 // Access webmap, set view, add editor widget
 const webmap = new WebMap({
     portalItem: {
-    id: "0c8e1fd68b2449cfb891b7f9ba314e80"
+        id: "0c8e1fd68b2449cfb891b7f9ba314e80"
     }
 });
 
