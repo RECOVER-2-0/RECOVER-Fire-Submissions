@@ -10,20 +10,85 @@
     <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
     <link rel="stylesheet" href="index.css">
     
+    <!-- START ARCADE EXPRESSIONS -->
+    <script type = "text/plain" id="state">
+      if (IsEmpty(Geometry($feature))) {
+        return;
+      }
+      var states = Intersects(FeatureSetByName($map, "Western States"), $feature);
+      
+      if (IsEmpty(states)) {
+        return null;
+      } else {
+        var state = First(states);
+        return state.STATE_ABBR
+      }
+    </script>
+    
+    <script type="text/plain" id="nearest-city">
+      if (isEmpty(Geometry($feature))) {
+        return;
+      }
+      
+      // Buffer distance in miles 
+      var bufferDist = 300;
+      var bufferGeom = Buffer($feature, bufferDist, "miles")
+      
+      // Find nearby major cities
+      var cities = Intersects(FeatureSetByName($map, "Cities", ["NAME"], true), bufferGeom);
+      
+      // return if no results
+      if (Count(cities) == 0) {
+        return null;
+      }
+      
+      var nearestCity
+      var minDistance = Infinity;
+      
+      // iterate through city points
+      for (var city in cities) {
+        var cityDistance = Distance(city, $feature, "miles");
+        
+        if (cityDistance < minDistance) {
+          nearestCity = city;
+          minDistance = cityDistance;
+        }
+      }
+      
+      // return city name from nearest city
+      return Proper(nearestCity.NAME);
+    </script>
+    
+    <script type = "text/plain" id="uid">
+      if (IsEmpty($feature.State) || IsEmpty($feature.Fire_Name)) {
+        return;
+      }
+      var stateAbbr = $feature.State;
+      var nameSubstr = Left($feature.Fire_Name, 3);
+      var subPre = "SUB_2023_";
+      
+      var uniqueID = Upper(Concatenate([subPre, stateAbbr, nameSubstr]));
+      
+      return uniqueID;
+      
+      
+    </script>
+    <!-- END ARCADE EXPRESSIONS -->
+
   </head>
   <body>
     <div class="header">
       <img src="https://www.arcgis.com/sharing/rest/content/items/18fb54a427d449c08dc79ba4a650d636/resources/images/widget_159/1683741702207.png" alt="NASA RECOVER 2.0 logo"/>Community Fire Submissions
     </div>
     <div id="viewDiv">
-      <div id="infoDiv">
+      <!--<div id="infoDiv">
         <h1>Instructions</h1>
         <p>Right about here is where I would put the instructions for how to submit a new fire to be included in the RECOVER 2.0 large fire trigger.</p>
       </div>
       <div id="aboutDiv">
         <h1>About RECOVER 2.0</h1>
         <p>Describe the project here, but maybe put the content inside of the Expand widget inside the JS file.</p>
-      </div>
+      </div>-->
     </div>
     <script type ="module" src="/index.js"></script>
   </body>
