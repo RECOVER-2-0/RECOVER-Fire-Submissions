@@ -31,6 +31,8 @@ const uidExpression = new ExpressionInfo({
     returnType: "string"
 });
 
+const reqExpression = "1 == 1";
+
 // Field elements for fire location grouping
 const stateFieldElement = new FieldElement({
     label: "State",
@@ -62,7 +64,8 @@ const fireNameFieldElement = new FieldElement({
         type: "text-box",
         minLength: 0,
         maxLength: 255
-    }
+    },
+    requiredExpression: reqExpression
 });
 
 const fireYearFieldElement = new FieldElement ({
