@@ -65,8 +65,22 @@ const fireNameFieldElement = new FieldElement({
     }
 });
 
+const fireYearFieldElement = new FieldElement ({
+    label: "Year",
+    description: "Enter the year this fire occurred.",
+    editable: true,
+    fieldName: "Fire_Year",
+    hint: "2023",
+    input: {
+        type: "text-box",
+        minLength: 4,
+        maxLength: 4
+    }
+});
+
 const uidFieldElement = new FieldElement({
     label: "Unique ID",
+    description: "This field is automatically generated based on fire name, year, and location.",
     editable: false, 
     fieldName: "Unique_ID",
     input: {
@@ -86,7 +100,7 @@ const groupElementLocation = new GroupElement({
 // Group elements for fire info
 const groupElementFireInfo = new GroupElement({
     label: "Fire Information",
-    elements: [fireNameFieldElement, uidFieldElement],
+    elements: [fireNameFieldElement, fireYearFieldElement, uidFieldElement],
     initialState: "expanded"
 });
 
