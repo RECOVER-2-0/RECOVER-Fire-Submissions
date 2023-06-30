@@ -31,6 +31,7 @@ const uidExpression = new ExpressionInfo({
     returnType: "string"
 });
 
+// Required expression must be an Arcade expression that resolves to the "true" boolean
 const reqExpression = "1 == 1";
 
 // Field elements for fire location grouping
