@@ -90,6 +90,53 @@ const uidFieldElement = new FieldElement({
     valueExpression: uidExpression.name
 });
 
+const firstNameFieldElement = new FieldElement({
+    label: "First Name",
+    editable: true,
+    fieldName: "Sub_FirstName",
+    input: {
+        type: "text-box",
+        minLength: 0,
+        maxLength: 255
+    }
+});
+
+const lastNameFieldElement = new FieldElement({
+    label: "Last Name",
+    editable: true,
+    fieldName: "Sub_LastName",
+    input: {
+        type: "text-box",
+        minLength: 0,
+        maxLength: 255
+    }
+});
+
+const emailFieldElement = new FieldElement({
+    label: "Email Address",
+    description: "Please enter a valid email address.",
+    editable: true,
+    fieldName: "Sub_Email",
+    input: {
+        type: "text-box",
+        minLength: 0,
+        maxLength: 255
+    }
+});
+
+const orgFieldElement = new FieldElement({
+    label: "Organization",
+    description: "If you belong to a federal, state, local, or other organization, please enter it here.",
+    editable: true,
+    fieldName: "Sub_Org",
+    hint: "Ex. USFS, NPS, etc.", 
+    input: {
+        type: "text-box",
+        minLength: 0,
+        maxLength: 255
+    }
+});
+
 // Group elements for location
 const groupElementLocation = new GroupElement({
     label: "Location",
@@ -104,11 +151,18 @@ const groupElementFireInfo = new GroupElement({
     initialState: "expanded"
 });
 
+const groupElementSubmitterInfo = new GroupElement({
+    label: "Submitter Information",
+    description: "This information is only used by the RECOVER development team and is not shared publicly.",
+    elements: [firstNameFieldElement, lastNameFieldElement, emailFieldElement, orgFieldElement],
+    initialState: "collapsed"
+});
+
 // Set properties for comm fire feature layer's FormTemplate
 const fireFormTemplate = new FormTemplate({
     title: "Community Fire Submission",
     description: "Submit a fire polygon for inclusion in RECOVER 2.0",
-    elements: [groupElementFireInfo, groupElementLocation],
+    elements: [groupElementFireInfo, groupElementLocation, groupElementSubmitterInfo],
     expressionInfos: [stateExpression, nearCityExpression, uidExpression]
 });
 
