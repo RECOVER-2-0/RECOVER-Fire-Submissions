@@ -8,6 +8,7 @@ import ExpressionInfo from "@arcgis/core/popup/ExpressionInfo.js";
 import FormTemplate from "@arcgis/core/form/FormTemplate.js";
 import GroupElement from "@arcgis/core/form/elements/GroupElement.js";
 import FieldElement from "@arcgis/core/form/elements/FieldElement.js";
+import Home from "@arcgis/core/widgets/Home.js";
 
 // Set expressionInfos for fire form Template
 const stateExpression = new ExpressionInfo({
@@ -209,4 +210,14 @@ view.when(() => {
     });
     
     view.ui.add(editor, "top-right");
+
+    const homeWidget = new Home({
+        view: view
+    });
+
+    view.ui.add({
+        component: homeWidget,
+        position: "top-left",
+        index: 1
+    });
 });
