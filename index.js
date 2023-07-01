@@ -43,7 +43,8 @@ const stateFieldElement = new FieldElement({
         type: "text-box",
         minLength: 0
     },
-    valueExpression: stateExpression.name
+    valueExpression: stateExpression.name,
+    requiredExpression: reqExpression
 });
 
 const cityFieldElement = new FieldElement({
@@ -79,7 +80,8 @@ const fireYearFieldElement = new FieldElement ({
         type: "text-box",
         minLength: 4,
         maxLength: 4
-    }
+    },
+    requiredExpression: reqExpression
 });
 
 const uidFieldElement = new FieldElement({
@@ -102,7 +104,8 @@ const firstNameFieldElement = new FieldElement({
         type: "text-box",
         minLength: 0,
         maxLength: 255
-    }
+    },
+    requiredExpression: reqExpression
 });
 
 const lastNameFieldElement = new FieldElement({
@@ -113,7 +116,8 @@ const lastNameFieldElement = new FieldElement({
         type: "text-box",
         minLength: 0,
         maxLength: 255
-    }
+    },
+    requiredExpression: reqExpression
 });
 
 const emailFieldElement = new FieldElement({
@@ -125,7 +129,8 @@ const emailFieldElement = new FieldElement({
         type: "text-box",
         minLength: 0,
         maxLength: 255
-    }
+    },
+    requiredExpression: reqExpression
 });
 
 const orgFieldElement = new FieldElement({
