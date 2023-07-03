@@ -19,9 +19,24 @@
       
       if (IsEmpty(states)) {
         return null;
-      } else {
+      } 
+      
+      if (Count(states) == 1) {
         var state = First(states);
-        return state.STATE_ABBR
+        return state.STATE_ABBR;
+      } else {
+        var largest = -1;
+        var result;
+
+        for (var state in states) {
+          var size = Area(Intersection($feature, state));
+
+          if (size > largest) {
+            largest = size;
+            result = state.STATE_ABBR;
+          }
+        }
+        return result;
       }
     </script>
     
