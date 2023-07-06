@@ -75,14 +75,15 @@
     </script>
     
     <script type = "text/plain" id="uid">
-      if (IsEmpty($feature.State) || IsEmpty($feature.Fire_Name)) {
+      if (IsEmpty($feature.State) || IsEmpty($feature.Fire_Name) || IsEmpty($feature.Fire_Year)) {
         return;
       }
+      var fYear = $feature.Fire_Year;
       var stateAbbr = $feature.State;
       var nameSubstr = Left($feature.Fire_Name, 3);
-      var subPre = "SUB_2023_";
+      var subPre = "SUB_";
       
-      var uniqueID = Upper(Concatenate([subPre, stateAbbr, nameSubstr]));
+      var uniqueID = Upper(Concatenate([subPre, fYear, "_", stateAbbr, nameSubstr]));
       
       return uniqueID;
       
