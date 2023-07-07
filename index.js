@@ -35,7 +35,7 @@ const uidExpression = new ExpressionInfo({
 const validationExpression = new ExpressionInfo({
     expression: document.getElementById("validation").text,
     name: "validation",
-    title: "Valid?",
+    title: "Valid",
     returnType: "string"
 });
 
@@ -101,7 +101,8 @@ const uidFieldElement = new FieldElement({
         type: "text-box",
         minLength: 0
     },
-    valueExpression: uidExpression.name
+    valueExpression: uidExpression.name,
+    requiredExpression: reqExpression
 });
 
 const firstNameFieldElement = new FieldElement({
@@ -183,7 +184,12 @@ const groupElementFireInfo = new GroupElement({
 const groupElementSubmitterInfo = new GroupElement({
     label: "Submitter Information",
     description: "This information is only used by the RECOVER development team and is not shared publicly.",
-    elements: [firstNameFieldElement, lastNameFieldElement, emailFieldElement, validationFieldElement, orgFieldElement],
+    elements: [
+        firstNameFieldElement, 
+        lastNameFieldElement, 
+        emailFieldElement, 
+        validationFieldElement, 
+        orgFieldElement],
     initialState: "collapsed"
 });
 
@@ -192,7 +198,7 @@ const fireFormTemplate = new FormTemplate({
     title: "Community Fire Submission",
     description: "Submit a fire polygon for inclusion in RECOVER 2.0",
     elements: [groupElementFireInfo, groupElementLocation, groupElementSubmitterInfo],
-    expressionInfos: [stateExpression, nearCityExpression, uidExpression]
+    expressionInfos: [stateExpression, nearCityExpression, uidExpression, validationExpression]
 });
 
 // Access webmap, set view, add editor widget
