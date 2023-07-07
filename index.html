@@ -92,11 +92,27 @@
 
       var subEmail = $feature.Sub_Email;
       
-      if (IsEmpty(subEmail)) {
-        return;
-      }
+      var banned = [33,35,36,37,38,39,42,43,45,47,61,63,94,95,96,123,124,125,126,34,40,41,44,58,59,60,62,91,92,93];
+      var tlds = [".com", ".org", ".net", ".int", ".edu", ".gov", ".mil"];
 
-      return subEmail
+      var inEmail = [];
+      for (var char in subEmail) {
+        var inEmailCC = ToCharCode(subEmail, char)
+        Push(inEmail, inEmailCC)
+      };
+
+      for (var char in inEmail) {
+        if (Includes(banned, inEmail[char])) {
+          return "Invalid";
+        }
+      };
+      
+      if (IsEmpty(subEmail)) {
+        return "Invalid";
+      }
+      
+
+      return "Valid";
 
     </script>
 
