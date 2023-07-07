@@ -32,6 +32,13 @@ const uidExpression = new ExpressionInfo({
     returnType: "string"
 });
 
+const validationExpression = new ExpressionInfo({
+    expression: document.getElementById("validation").text,
+    name: "validation",
+    title: "Valid?",
+    returnType: "string"
+});
+
 // Required expression must be an Arcade expression that resolves to the "true" boolean
 const reqExpression = "1 == 1";
 
@@ -134,6 +141,18 @@ const emailFieldElement = new FieldElement({
     requiredExpression: reqExpression
 });
 
+const validationFieldElement = new FieldElement({
+    label: "Is the provided email address valid?",
+    description: "This field checks the Email field for validity.",
+    editable: false,
+    fieldName: "Email_Val",
+    input: {
+        type: "text-box",
+        minLength: 0
+    },
+    valueExpression: validationExpression.name
+});
+
 const orgFieldElement = new FieldElement({
     label: "Organization",
     description: "If you belong to a federal, state, local, or other organization, please enter it here.",
@@ -164,7 +183,7 @@ const groupElementFireInfo = new GroupElement({
 const groupElementSubmitterInfo = new GroupElement({
     label: "Submitter Information",
     description: "This information is only used by the RECOVER development team and is not shared publicly.",
-    elements: [firstNameFieldElement, lastNameFieldElement, emailFieldElement, orgFieldElement],
+    elements: [firstNameFieldElement, lastNameFieldElement, emailFieldElement, validationFieldElement, orgFieldElement],
     initialState: "collapsed"
 });
 
