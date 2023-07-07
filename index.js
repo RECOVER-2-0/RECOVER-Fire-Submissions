@@ -144,14 +144,15 @@ const emailFieldElement = new FieldElement({
 
 const validationFieldElement = new FieldElement({
     label: "Is the provided email address valid?",
-    description: "This field checks the Email field for validity.",
+    description: "This field checks the Email field for validity. If an invalid email is entered, the submitted polygon will NOT be included in RECOVER 2.0.",
     editable: false,
     fieldName: "Email_Val",
     input: {
         type: "text-box",
         minLength: 0
     },
-    valueExpression: validationExpression.name
+    valueExpression: validationExpression.name,
+    requiredExpression: reqExpression
 });
 
 const orgFieldElement = new FieldElement({
@@ -198,7 +199,7 @@ const fireFormTemplate = new FormTemplate({
     title: "Community Fire Submission",
     description: "Submit a fire polygon for inclusion in RECOVER 2.0",
     elements: [groupElementFireInfo, groupElementLocation, groupElementSubmitterInfo],
-    expressionInfos: [stateExpression, nearCityExpression, uidExpression, validationExpression]
+    expressionInfos: [stateExpression, nearCityExpression, uidExpression, validationExpression, reqExpression]
 });
 
 // Access webmap, set view, add editor widget
