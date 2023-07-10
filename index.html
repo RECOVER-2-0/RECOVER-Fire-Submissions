@@ -102,7 +102,7 @@
       };
 
       for (var char in inEmail) {
-        if (Includes(banned, inEmail[char])) {
+        if (Includes(banned, inEmail[char]) || (Find("@", subEmail) == -1)) {
           return "Invalid";
         }
       };
