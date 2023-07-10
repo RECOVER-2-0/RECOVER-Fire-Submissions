@@ -103,6 +103,9 @@
           return 0;
         }
       }
+      
+      var splitEmail = Split(subEmail, "@");
+      var atCount = Count(splitEmail);
 
       var inEmail = [];
       for (var char in subEmail) {
@@ -111,7 +114,7 @@
       };
 
       for (var char in inEmail) {
-        if (Includes(banned, inEmail[char]) || (Find("@", subEmail) == -1) || findTld(subEmail) == 0) {
+        if (Includes(banned, inEmail[char]) || (Find("@", subEmail) == -1) || findTld(subEmail) == 0 || atCount != 2) {
           return "Invalid";
         }
       };
