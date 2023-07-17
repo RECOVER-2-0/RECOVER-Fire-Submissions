@@ -11,6 +11,7 @@ import FieldElement from "@arcgis/core/form/elements/FieldElement.js";
 import Home from "@arcgis/core/widgets/Home.js";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery.js";
 import Legend from "@arcgis/core/widgets/Legend.js";
+import LayerList from "@arcgis/core/widgets/LayerList.js";
 import Expand from "@arcgis/core/widgets/Expand.js";
 
 // Set expressionInfos for fire form Template
@@ -265,16 +266,32 @@ view.when(() => {
         component: bmgExpand,
         position: "top-left",
         index: 2
-    });
+    },);
     
     const legend = new Legend({
+        view: view
+    });
+
+    const lyrList = new LayerList({
         view: view
     });
     
     const legExpand = new Expand({
         view: view,
         content: legend,
-        expanded: true
+        expanded: true,
+        group: "bottom-right"
+    });
+    const lyrListExpand = new Expand({
+        view: view,
+        content: lyrList,
+        group: "bottom-right"
+    });
+
+    view.ui.add({
+        component: lyrListExpand,
+        position: "top-left",
+        index: 3
     });
 
     view.ui.add([legExpand], "bottom-right");
