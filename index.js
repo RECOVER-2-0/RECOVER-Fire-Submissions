@@ -10,6 +10,7 @@ import GroupElement from "@arcgis/core/form/elements/GroupElement.js";
 import FieldElement from "@arcgis/core/form/elements/FieldElement.js";
 import Home from "@arcgis/core/widgets/Home.js";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery.js";
+import Legend from "@arcgis/core/widgets/Legend.js";
 import Expand from "@arcgis/core/widgets/Expand.js";
 
 // Set expressionInfos for fire form Template
@@ -258,11 +259,23 @@ view.when(() => {
         view: view,
         content: basemapGallery,
         group: "top-left"
-    })
+    });
 
     view.ui.add({
         component: bmgExpand,
         position: "top-left",
         index: 2
     });
+    
+    const legend = new Legend({
+        view: view
+    });
+    
+    const legExpand = new Expand({
+        view: view,
+        content: legend,
+        expanded: true
+    });
+
+    view.ui.add([legExpand], "bottom-right");
 });
