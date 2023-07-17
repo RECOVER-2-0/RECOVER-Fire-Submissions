@@ -9,6 +9,8 @@ import FormTemplate from "@arcgis/core/form/FormTemplate.js";
 import GroupElement from "@arcgis/core/form/elements/GroupElement.js";
 import FieldElement from "@arcgis/core/form/elements/FieldElement.js";
 import Home from "@arcgis/core/widgets/Home.js";
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery.js";
+import Expand from "@arcgis/core/widgets/Expand.js";
 
 // Set expressionInfos for fire form Template
 const stateExpression = new ExpressionInfo({
@@ -245,5 +247,22 @@ view.when(() => {
         component: homeWidget,
         position: "top-left",
         index: 1
+    });
+
+    // Legend, Basemaps, and LayerList
+    const basemapGallery = new BasemapGallery({
+        view: view
+    });
+
+    const bmgExpand = new Expand({
+        view: view,
+        content: basemapGallery,
+        group: "top-left"
+    })
+
+    view.ui.add({
+        component: bmgExpand,
+        position: "top-left",
+        index: 2
     });
 });
