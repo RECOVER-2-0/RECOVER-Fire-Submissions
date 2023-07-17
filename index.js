@@ -278,9 +278,7 @@ view.when(() => {
     
     const legExpand = new Expand({
         view: view,
-        content: legend,
-        expanded: true,
-        group: "bottom-right"
+        content: legend
     });
     const lyrListExpand = new Expand({
         view: view,
@@ -293,5 +291,22 @@ view.when(() => {
         index: 3
     });
 
-    view.ui.add([legExpand], "bottom-right");
+    view.ui.add([legExpand], "top-left");
+
+    const instExpand = new Expand({
+        view: view,
+        expanded: true,
+        expandIconClass: "esri-icon-description",
+        content: "Instructions go here.",
+        group: "bottom-right"
+    });
+
+    const aboutExpand = new Expand({
+        view: view,
+        expandIconClass: "esri-icon-question",
+        content: "About RECOVER 2.0.",
+        group: "bottom-right"
+    });
+
+    view.ui.add([aboutExpand, instExpand], "bottom-right");
 });
