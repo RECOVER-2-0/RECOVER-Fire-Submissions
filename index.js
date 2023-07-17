@@ -284,8 +284,7 @@ view.when(() => {
     });
     const lyrListExpand = new Expand({
         view: view,
-        content: lyrList,
-        group: "bottom-right"
+        content: lyrList
     });
 
     view.ui.add({
