@@ -2,7 +2,8 @@
 // Imports
 import WebMap from '@arcgis/core/WebMap.js';
 import MapView from '@arcgis/core/views/MapView.js';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js'
+import Search from "@arcgis/core/widgets/Search.js";
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
 import Editor from "@arcgis/core/widgets/Editor.js";
 import ExpressionInfo from "@arcgis/core/popup/ExpressionInfo.js";
 import FormTemplate from "@arcgis/core/form/FormTemplate.js";
@@ -13,6 +14,15 @@ import BasemapGallery from "@arcgis/core/widgets/BasemapGallery.js";
 import Legend from "@arcgis/core/widgets/Legend.js";
 import LayerList from "@arcgis/core/widgets/LayerList.js";
 import Expand from "@arcgis/core/widgets/Expand.js";
+
+// Add both fire feature layers for use in the search widget later
+const recFires = new FeatureLayer({
+    url: "https://services1.arcgis.com/z5tlnpYHokW9isdE/arcgis/rest/services/RECOVER_Fires/FeatureServer/0"
+});
+
+const subFires = new FeatureLayer({
+    url: "https://services1.arcgis.com/z5tlnpYHokW9isdE/arcgis/rest/services/community_fire_submissions/FeatureServer/0"
+});
 
 // Set expressionInfos for fire form Template
 const stateExpression = new ExpressionInfo({
@@ -240,6 +250,31 @@ view.when(() => {
     });
     
     view.ui.add(editor, "top-right");
+
+    const searchWidget = new Search({
+        view: view,
+        allPlaceholder: "Fires or places",
+        sources: [
+            {
+                layer: recFires,
+                searchFields: ["poly_IncidentName", "irwin_UniqueFireIdentifier"],
+                name: "RECOVER Fires",
+                placeholder: "Search RECOVER fires"
+            },
+            {
+                layer: subFires,
+                searchFields: ["Fire_Name", "Unique_ID"],
+                name: "Community Submitted Fires",
+                placeholder: "Search submitted fires"
+            }
+        ]
+    });
+
+    view.ui.add({
+        component: searchWidget,
+        position: "top-left",
+        index: 0
+    });
 
     const homeWidget = new Home({
         view: view
