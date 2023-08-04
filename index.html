@@ -136,6 +136,28 @@
       <img src="https://www.arcgis.com/sharing/rest/content/items/18fb54a427d449c08dc79ba4a650d636/resources/images/widget_159/1683741702207.png" alt="NASA RECOVER 2.0 logo"/>Community Fire Submissions
     </div>
     <div id="viewDiv">
+      <div id="aboutDiv">
+        <h1>About</h1>
+        <p>
+          Welcome to the NASA RECOVER 2.0 Community Fire Submissions web mapping application. The
+          purpose of this application is to allow members of the post-wildfire management and forestry
+          communities to submit fires for inclusion in RECOVER. These fires could be new fires that are
+          not large enough to be caught by the Large Fire Trigger (which populates the RECOVER_Fires 
+          hosted feature layer found in the RECOVER 2.0 dashboard and creates their associated downloadable
+          data packages), older fires for which RECOVER data packages were not created, or other fires. 
+        </p>
+        <h4>How it works</h4>
+        <p>
+          This application works by allowing users to submit fire shapes and additional information.
+          Using the Editor widget in the top-right corner of the screen, users can draw new shapes or
+          edit existing shapes. After collecting some information including fire name, location, and 
+          user contact information, the submitted fire shape is displayed on the map and created in 
+          the Community Fire Submissions hosted feature layer. This hosted feature layer is consumed 
+          by the Large Fire Trigger on a nightly basis and the submitted fire shape will be made 
+          available for download in the RECOVER Dashboard the next morning. Note that adjustments to 
+          the submitted fire will overwrite the existing data package.
+        </p>
+      </div>
     </div>
     <script type ="module" src="/index.js"></script>
   </body>

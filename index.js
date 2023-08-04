@@ -339,7 +339,7 @@ view.when(() => {
     const aboutExpand = new Expand({
         view: view,
         expandIconClass: "esri-icon-question",
-        content: "About RECOVER 2.0.",
+        content: document.getElementById("aboutDiv"),
         group: "bottom-right"
     });
 
