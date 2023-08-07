@@ -33,6 +33,8 @@ body
     width: 300px;
     background-color: white;
     padding: 10px;
+    max-height: 320px;
+    overflow: auto;
 }
 #infoDiv, #aboutDiv h1 {
     font-size: 16px;
