@@ -39,6 +39,6 @@ body
 #infoDiv, #aboutDiv h1 {
     font-size: 16px;
 }
-/* #infoDiv, #aboutDiv p {
-    font-style: italic;
-} */
+#infoDiv li {
+  font-weight: 500;
+}
