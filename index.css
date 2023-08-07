@@ -39,3 +39,6 @@ body
 #infoDiv li {
   font-weight: 500;
 }
+#infoDiv img {
+  width: 80%;
+}
