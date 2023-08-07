@@ -36,9 +36,6 @@ body
     max-height: 320px;
     overflow: auto;
 }
-#infoDiv, #aboutDiv h1 {
-    font-size: 16px;
-}
 #infoDiv li {
   font-weight: 500;
 }
