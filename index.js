@@ -332,16 +332,18 @@ view.when(() => {
         view: view,
         expanded: true,
         expandIconClass: "esri-icon-description",
-        content: "Instructions go here.",
-        group: "bottom-right"
+        expandTooltip: "Click to expand instructions",
+        content: document.getElementById("infoDiv"),
+        group: "bottom-left"
     });
 
     const aboutExpand = new Expand({
         view: view,
         expandIconClass: "esri-icon-question",
+        expandTooltip: "About Community Submitted Fires",
         content: document.getElementById("aboutDiv"),
-        group: "bottom-right"
+        group: "bottom-left"
     });
 
-    view.ui.add([aboutExpand, instExpand], "bottom-right");
+    view.ui.add([aboutExpand, instExpand], "bottom-left");
 });
