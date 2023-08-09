@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>RECOVER 2.0: Community Submitted Fires</title>
+    <link rel="icon" type="image/x-icon" href="https://www.isu.edu/media/top-level/images/favicon.ico">
+    <style>
+        html,
+        body
+        {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        }
+        .header {
+        text-align: left;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        background: black;
+        color: white;
+        height: 44px;
+        display: flex;
+        padding-top: 5px;
+        align-items: left;
+        font-weight: bold;
+        font-size: 24pt;
+        }
+        .header img {
+        height: 40px;
+        margin: 0 8px 0 8px;
+        }
+        #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: calc(100% - 49px);
+        width: 100%;
+        }
+
+        #infoDiv, #aboutDiv {
+            width: 300px;
+            background-color: white;
+            padding: 10px;
+            max-height: 320px;
+            overflow: auto;
+        }
+        #infoDiv li {
+        font-weight: 500;
+        }
+        #infoDiv img {
+        width: 80%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
+    <link rel="stylesheet" href="index.css">
+    
+    <!-- START ARCADE EXPRESSIONS -->
+    <script type = "text/plain" id="state">
+      if (IsEmpty(Geometry($feature))) {
+        return;
+      }
+      var states = Intersects(FeatureSetByName($map, "Western States"), $feature);
+      
+      if (IsEmpty(states)) {
+        return null;
+      } 
+      
+      if (Count(states) == 1) {
+        var state = First(states);
+        return state.STATE_ABBR;
+      } else {
+        var largest = -1;
+        var result;
+
+        for (var state in states) {
+          var size = Area(Intersection($feature, state));
+
+          if (size > largest) {
+            largest = size;
+            result = state.STATE_ABBR;
+          }
+        }
+        return result;
+      }
+    </script>
+    
+    <script type="text/plain" id="nearest-city">
+      if (isEmpty(Geometry($feature))) {
+        return;
+      }
+      
+      // Buffer distance in miles 
+      var bufferDist = 300;
+      var bufferGeom = Buffer($feature, bufferDist, "miles")
+      
+      // Find nearby major cities
+      var cities = Intersects(FeatureSetByName($map, "Cities", ["NAME"], true), bufferGeom);
+      
+      // return if no results
+      if (Count(cities) == 0) {
+        return null;
+      }
+      
+      var nearestCity
+      var minDistance = Infinity;
+      
+      // iterate through city points
+      for (var city in cities) {
+        var cityDistance = Distance(city, $feature, "miles");
+        
+        if (cityDistance < minDistance) {
+          nearestCity = city;
+          minDistance = cityDistance;
+        }
+      }
+      
+      // return city name from nearest city
+      return Proper(nearestCity.NAME);
+    </script>
+    
+    <script type = "text/plain" id="uid">
+      if (IsEmpty($feature.State) || IsEmpty($feature.Fire_Name) || IsEmpty($feature.Fire_Year)) {
+        return;
+      }
+      var fYear = $feature.Fire_Year;
+      var stateAbbr = $feature.State;
+      var nameSubstr = Left($feature.Fire_Name, 3);
+      var subPre = "SUB_";
+      
+      var uniqueID = Upper(Concatenate([subPre, fYear, "_", stateAbbr, nameSubstr]));
+      
+      return uniqueID;
+    </script>
+
+    <script type = "text/plain" id="validation">
+
+      var subEmail = $feature.Sub_Email;
+      
+      var banned = [33,35,36,37,38,39,42,43,45,47,61,63,94,95,96,123,124,125,126,34,40,41,44,58,59,60,62,91,92,93];
+      var tlds = [".com", ".org", ".net", ".int", ".edu", ".gov", ".mil"];
+      
+      function findTld (email) {
+        var tld = Right(email, 4)
+        if (Includes(tlds, tld)) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+      
+      var splitEmail = Split(subEmail, "@");
+      var atCount = Count(splitEmail);
+
+      var inEmail = [];
+      for (var char in subEmail) {
+        var inEmailCC = ToCharCode(subEmail, char)
+        Push(inEmail, inEmailCC)
+      };
+
+      for (var char in inEmail) {
+        if (Includes(banned, inEmail[char]) || (Find("@", subEmail) == -1) || findTld(subEmail) == 0 || atCount != 2) {
+          return "Invalid";
+        }
+      };
+
+      if (IsEmpty(subEmail)) {
+        return "Invalid";
+      }
+      
+
+      return "Valid";
+
+    </script>
+
+    <!-- END ARCADE EXPRESSIONS -->
+
+  </head>
+  <body>
+    <div class="header">
+      <img src="https://www.arcgis.com/sharing/rest/content/items/18fb54a427d449c08dc79ba4a650d636/resources/images/widget_159/1683741702207.png" alt="NASA RECOVER 2.0 logo"/>Community Fire Submissions
+    </div>
+    <div id="viewDiv">
+      <div id="aboutDiv">
+        <h3>About</h3>
+        <p>
+          Welcome to the NASA RECOVER 2.0 Community Fire Submissions web mapping application. The
+          purpose of this application is to allow members of the post-wildfire management and forestry
+          communities to submit fires for inclusion in RECOVER. These fires could be new fires that are
+          not large enough to be caught by the Large Fire Trigger (which populates the RECOVER_Fires 
+          hosted feature layer found in the RECOVER 2.0 dashboard and creates their associated downloadable
+          data packages), older fires for which RECOVER data packages were not created, or other fires. 
+        </p>
+        <h3>How it works</h3>
+        <p>
+          This application works by allowing users to submit fire shapes and additional information.
+          Using the Editor widget in the top-right corner of the screen, users can draw new shapes or
+          edit existing shapes. After collecting some information including fire name, location, and 
+          user contact information, the submitted fire shape is displayed on the map and created in 
+          the Community Fire Submissions hosted feature layer. This hosted feature layer is consumed 
+          by the Large Fire Trigger on a nightly basis and the submitted fire shape will be made 
+          available for download in the RECOVER Dashboard the next morning. Note that adjustments to 
+          the submitted fire will overwrite the existing data package.
+        </p>
+      </div>
+      <div id="infoDiv">
+        <h3>Instructions</h3>
+        <ol type="1">
+          <li>Locate the area where you plan to submit your fire</li>
+          <img src="images/sf_1.gif">
+          <p>
+            Use the Search widget in the top-left corner to locate an area using Esri's 
+            geocoding service. Zoom with the widgets ( + and - ) on the left hand side. 
+            Alternatively, click and drag the map to an area of interest and scroll with 
+            your mouse or track pad to zoom in or out.
+          </p>
+          <li>Draw the perimeter of your fire on the map</li>
+          <img src="images/sf_2.gif">
+          <p>
+            Click the New Feature button underneath Create features in the Editor widget.
+            When activated, the New Feature button will show a blue bar on its left border. 
+            This button allows you to click on the map and place vertices. Place vertices 
+            until your fire perimeter has been drawn. Double-click on the last vertex to 
+            finish drawing your fire perimeter.
+          </p>
+          <li>Fill out fire information</li>
+          <img src="images/sf_3.gif">
+          <p>
+            A finished fire perimeter is indicated by the orange and white adjustment box
+            around the new shape. You can discard your shape at any time after you finish
+            drawing by clicking the back arrow in the top left corner of the Editor widget.
+            These squares and circle (called adjustment handles) can be clicked and dragged 
+            to adjust the width, height, and rotation of the shape.The editor widget will 
+            also switch to the Community Fire Submission Form. Fill out the Fire Information 
+            part of the form. Note the Fire Name field is required. The default year is the 
+            current year but can be adjusted using the arrows. The Unique ID is automatically 
+            generated based on fire name, year, and location. The Location information is 
+            automatically generated based on where the fire perimeter is drawn. Automatically 
+            generated fields are not editable. 
+          </p>
+          <li>Fill out submitter information</li>
+          <img src="images/sf_4.gif">
+          <p>
+            This form requires First and Last Name and a valid email address. These fields are
+            not displayed in the map. They are used internally in case there are issues
+            and the RECOVER team needs to reach out for clarification. Note there is a field 
+            that checks validity of the Email Address field. The provided email address *must*
+            be valid, otherwise the shape will not be included in RECOVER 2.0. The submitter may
+            optionally fill out the Organization field. 
+          </p>
+          <li>Create new submitted fire feature</li>
+          <img src="images/sf_5.gif">
+          <p>
+            Click the blue Create button to finish your submitted fire! The data package 
+            will be created the next time RECOVER's Large Fire Trigger runs. Submitted fires 
+            will typically be available the day following submission.
+          </p>
+        </ol>
+      </div>
+    </div>
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script>
+    require([ 
+        "esri/WebMap", 
+        "esri/views/MapView", 
+        "esri/widgets/Search", 
+        "esri/layers/FeatureLayer", 
+        "esri/widgets/Editor", 
+        "esri/popup/ExpressionInfo", 
+        "esri/form/FormTemplate", 
+        "esri/form/elements/GroupElement", 
+        "esri/form/elements/FieldElement", 
+        "esri/widgets/Home", 
+        "esri/widgets/BasemapGallery", 
+        "esri/widgets/Legend", 
+        "esri/widgets/LayerList", 
+        "esri/widgets/Expand" 
+    ], (
+        WebMap, 
+        MapView, 
+        Search, 
+        FeatureLayer, 
+        Editor, 
+        ExpressionInfo, 
+        FormTemplate, 
+        GroupElement, 
+        FieldElement, 
+        Home, 
+        BasemapGallery, 
+        Legend, 
+        LayerList, 
+        Expand
+        ) => {
+    // Code to create the map and view will go here
+    
+        // Imports
+        // import WebMap from '@arcgis/core/WebMap.js';
+        // import MapView from '@arcgis/core/views/MapView.js';
+        // import Search from "@arcgis/core/widgets/Search.js";
+        // import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
+        // import Editor from "@arcgis/core/widgets/Editor.js";
+        // import ExpressionInfo from "@arcgis/core/popup/ExpressionInfo.js";
+        // import FormTemplate from "@arcgis/core/form/FormTemplate.js";
+        // import GroupElement from "@arcgis/core/form/elements/GroupElement.js";
+        // import FieldElement from "@arcgis/core/form/elements/FieldElement.js";
+        // import Home from "@arcgis/core/widgets/Home.js";
+        // import BasemapGallery from "@arcgis/core/widgets/BasemapGallery.js";
+        // import Legend from "@arcgis/core/widgets/Legend.js";
+        // import LayerList from "@arcgis/core/widgets/LayerList.js";
+        // import Expand from "@arcgis/core/widgets/Expand.js";
+
+        // Add both fire feature layers for use in the search widget later
+        const recFires = new FeatureLayer({
+            url: "https://services1.arcgis.com/z5tlnpYHokW9isdE/arcgis/rest/services/RECOVER_Fires/FeatureServer/0"
+        });
+
+        const subFires = new FeatureLayer({
+            url: "https://services1.arcgis.com/z5tlnpYHokW9isdE/arcgis/rest/services/community_fire_submissions/FeatureServer/0"
+        });
+
+        // Set expressionInfos for fire form Template
+        const stateExpression = new ExpressionInfo({
+            expression: document.getElementById("state").text,
+            name: "state",
+            title: "State",
+            returnType: "string"
+        });
+
+        const nearCityExpression = new ExpressionInfo({
+            expression: document.getElementById("nearest-city").text,
+            name: "nearest-city",
+            title: "Nearest Major City",
+            returnType: "string"
+        });
+
+        const uidExpression = new ExpressionInfo({
+            expression: document.getElementById("uid").text,
+            name: "unique-id",
+            title: "Unique ID",
+            returnType: "string"
+        });
+
+        const validationExpression = new ExpressionInfo({
+            expression: document.getElementById("validation").text,
+            name: "validation",
+            title: "Valid",
+            returnType: "string"
+        });
+
+        // Required expression must be an Arcade expression that resolves to the "true" boolean
+        const reqExpression = "1 == 1";
+
+        // Field elements for fire location grouping
+        const stateFieldElement = new FieldElement({
+            label: "State",
+            editable: false,
+            fieldName: "State",
+            input: {
+                type: "text-box",
+                minLength: 0
+            },
+            valueExpression: stateExpression.name,
+            requiredExpression: reqExpression
+        });
+
+        const cityFieldElement = new FieldElement({
+            label: "Nearest major city",
+            editable: false,
+            fieldName: "City",
+            input: {
+                type: "text-box",
+                minLength: 0
+            },
+            valueExpression: nearCityExpression.name
+        });
+
+        const fireNameFieldElement = new FieldElement({
+            label: "Fire Name",
+            editable: true,
+            fieldName: "Fire_Name",
+            input: {
+                type: "text-box",
+                minLength: 0,
+                maxLength: 255
+            },
+            requiredExpression: reqExpression
+        });
+
+        const fireYearFieldElement = new FieldElement ({
+            label: "Year",
+            description: "Enter the year this fire occurred.",
+            editable: true,
+            fieldName: "Fire_Year",
+            hint: "2023",
+            input: {
+                type: "text-box",
+                minLength: 4,
+                maxLength: 4
+            },
+            requiredExpression: reqExpression
+        });
+
+        const uidFieldElement = new FieldElement({
+            label: "Unique ID",
+            description: "This field is automatically generated based on fire name, year, and location.",
+            editable: false, 
+            fieldName: "Unique_ID",
+            input: {
+                type: "text-box",
+                minLength: 0
+            },
+            valueExpression: uidExpression.name,
+            requiredExpression: reqExpression
+        });
+
+        const firstNameFieldElement = new FieldElement({
+            label: "First Name",
+            editable: true,
+            fieldName: "Sub_FirstName",
+            input: {
+                type: "text-box",
+                minLength: 0,
+                maxLength: 255
+            },
+            requiredExpression: reqExpression
+        });
+
+        const lastNameFieldElement = new FieldElement({
+            label: "Last Name",
+            editable: true,
+            fieldName: "Sub_LastName",
+            input: {
+                type: "text-box",
+                minLength: 0,
+                maxLength: 255
+            },
+            requiredExpression: reqExpression
+        });
+
+        const emailFieldElement = new FieldElement({
+            label: "Email Address",
+            description: "Please enter a valid email address.",
+            editable: true,
+            fieldName: "Sub_Email",
+            input: {
+                type: "text-box",
+                minLength: 0,
+                maxLength: 255
+            },
+            requiredExpression: reqExpression
+        });
+
+        const validationFieldElement = new FieldElement({
+            label: "Is the provided email address valid?",
+            description: "This field checks the Email field for validity. If an invalid email is entered, the submitted polygon will NOT be included in RECOVER 2.0.",
+            editable: false,
+            fieldName: "Email_Val",
+            input: {
+                type: "text-box",
+                minLength: 0
+            },
+            valueExpression: validationExpression.name,
+            requiredExpression: reqExpression
+        });
+
+        const orgFieldElement = new FieldElement({
+            label: "Organization",
+            description: "If you belong to a federal, state, local, or other organization, please enter it here.",
+            editable: true,
+            fieldName: "Sub_Org",
+            hint: "Ex. USFS, NPS, etc.", 
+            input: {
+                type: "text-box",
+                minLength: 0,
+                maxLength: 255
+            }
+        });
+
+        // Group elements for location
+        const groupElementLocation = new GroupElement({
+            label: "Location",
+            elements: [stateFieldElement, cityFieldElement],
+            initialState: "collapsed"
+        });
+
+        // Group elements for fire info
+        const groupElementFireInfo = new GroupElement({
+            label: "Fire Information",
+            elements: [fireNameFieldElement, fireYearFieldElement, uidFieldElement],
+            initialState: "expanded"
+        });
+
+        const groupElementSubmitterInfo = new GroupElement({
+            label: "Submitter Information",
+            description: "This information is only used by the RECOVER development team and is not shared publicly.",
+            elements: [
+                firstNameFieldElement, 
+                lastNameFieldElement, 
+                emailFieldElement, 
+                validationFieldElement, 
+                orgFieldElement],
+            initialState: "collapsed"
+        });
+
+        // Set properties for comm fire feature layer's FormTemplate
+        const fireFormTemplate = new FormTemplate({
+            title: "Community Fire Submission",
+            description: "Submit a fire polygon for inclusion in RECOVER 2.0",
+            elements: [groupElementFireInfo, groupElementLocation, groupElementSubmitterInfo],
+            expressionInfos: [stateExpression, nearCityExpression, uidExpression, validationExpression, reqExpression]
+        });
+
+        // Access webmap, set view, add editor widget
+        const webmap = new WebMap({
+            portalItem: {
+                id: "0c8e1fd68b2449cfb891b7f9ba314e80"
+            }
+        });
+
+        const view = new MapView({ // This specific view setting is just for testing and should be changed to all of the Western US soon
+            map: webmap,
+            center: [-111.236885, 41.409494],
+            zoom: 10,
+            container: "viewDiv"
+        });
+
+        view.when(() => {
+            view.map.loadAll().then(() => {
+                view.map.editableLayers.forEach((layer) => {
+                    // Grab comm fires from web map and set form template
+                    if (layer.type === "feature" && layer.title === "Community Fire Submissions") {
+                        layer.formTemplate = fireFormTemplate;
+                    }
+                });
+            });
+            
+            const editor = new Editor({
+                view: view,
+                supportingWidgetDefaults: {
+                    featureForm: {
+                        groupDisplay: "sequential"
+                    }
+                }
+            });
+            
+            view.ui.add(editor, "top-right");
+
+            const searchWidget = new Search({
+                view: view,
+                allPlaceholder: "Fires or places",
+                sources: [
+                    {
+                        layer: recFires,
+                        searchFields: ["poly_IncidentName", "irwin_UniqueFireIdentifier"],
+                        name: "RECOVER Fires",
+                        placeholder: "Search RECOVER fires"
+                    },
+                    {
+                        layer: subFires,
+                        searchFields: ["Fire_Name", "Unique_ID"],
+                        name: "Community Submitted Fires",
+                        placeholder: "Search submitted fires"
+                    }
+                ]
+            });
+
+            view.ui.add({
+                component: searchWidget,
+                position: "top-left",
+                index: 0
+            });
+
+            const homeWidget = new Home({
+                view: view
+            });
+
+            view.ui.add({
+                component: homeWidget,
+                position: "top-left",
+                index: 1
+            });
+
+            // Legend, Basemaps, and LayerList
+            const basemapGallery = new BasemapGallery({
+                view: view
+            });
+
+            const bmgExpand = new Expand({
+                view: view,
+                content: basemapGallery,
+                group: "top-left"
+            });
+
+            view.ui.add({
+                component: bmgExpand,
+                position: "top-left",
+                index: 2
+            },);
+            
+            const legend = new Legend({
+                view: view
+            });
+
+            const lyrList = new LayerList({
+                view: view
+            });
+            
+            const legExpand = new Expand({
+                view: view,
+                content: legend
+            });
+            const lyrListExpand = new Expand({
+                view: view,
+                content: lyrList
+            });
+
+            view.ui.add({
+                component: lyrListExpand,
+                position: "top-left",
+                index: 3
+            });
+
+            view.ui.add([legExpand], "top-left");
+
+            const instExpand = new Expand({
+                view: view,
+                expanded: true,
+                expandIconClass: "esri-icon-description",
+                expandTooltip: "Click to expand instructions",
+                content: document.getElementById("infoDiv"),
+                group: "bottom-left"
+            });
+
+            const aboutExpand = new Expand({
+                view: view,
+                expandIconClass: "esri-icon-question",
+                expandTooltip: "About Community Submitted Fires",
+                content: document.getElementById("aboutDiv"),
+                group: "bottom-left"
+            });
+
+            view.ui.add([aboutExpand, instExpand], "bottom-left");
+        });
+    });        
+    </script>
+  </body>
+</html>
+
