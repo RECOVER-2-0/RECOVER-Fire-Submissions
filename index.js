@@ -226,7 +226,7 @@ const webmap = new WebMap({
 const view = new MapView({ // This specific view setting is just for testing and should be changed to all of the Western US soon
     map: webmap,
     center: [-111.236885, 41.409494],
-    zoom: 10,
+    zoom: 5,
     container: "viewDiv"
 });
 
