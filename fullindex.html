@@ -185,73 +185,65 @@
         <h3>About</h3>
         <p>
           Welcome to the NASA RECOVER 2.0 Community Fire Submissions web mapping application. The
-          purpose of this application is to allow members of the post-wildfire management and forestry
-          communities to submit fires for inclusion in RECOVER. These fires could be new fires that are
-          not large enough to be caught by the Large Fire Trigger (which populates the RECOVER_Fires 
-          hosted feature layer found in the RECOVER 2.0 dashboard and creates their associated downloadable
-          data packages), older fires for which RECOVER data packages were not created, or other fires. 
+          purpose of this application is to allow members of the wildfire and emergency management 
+          communities to submit fires for inclusion in RECOVER. These submissions may be fires that were
+          not large enough to be acquired by RECOVER's threshold of 1000 acres, or older fires occuring 
+          before 2023. 
         </p>
         <h3>How it works</h3>
         <p>
-          This application works by allowing users to submit fire shapes and additional information.
-          Using the Editor widget in the top-right corner of the screen, users can draw new shapes or
-          edit existing shapes. After collecting some information including fire name, location, and 
-          user contact information, the submitted fire shape is displayed on the map and created in 
-          the Community Fire Submissions hosted feature layer. This hosted feature layer is consumed 
-          by the Large Fire Trigger on a nightly basis and the submitted fire shape will be made 
-          available for download in the RECOVER Dashboard the next morning. Note that adjustments to 
-          the submitted fire will overwrite the existing data package.
-        </p>
+          This app works by allowing users to submit fire polygons and additional information.
+          Using the Editor widget in the top-right corner of the screen, users can draw new fire areas or
+          edit existing shapes they previously created (Note: edits to a submitted fire will overwrite the 
+          existing data package). After collecting some information including fire name, location text, and 
+          user contact information, the submitted fire is displayed on the map and added to 
+          the Community Fire Submissions feature layer in ArcGIS Online. New fires found in this layer will be 
+          processed by RECOVER and made available for download in the RECOVER Dashboard by the following day.
       </div>
       <div id="infoDiv">
         <h3>Instructions</h3>
         <ol type="1">
-          <li>Locate the area where you plan to submit your fire</li>
+          <li>Locate the area where you need to submit a new fire</li>
           <img src="https://isu.maps.arcgis.com/sharing/rest/content/items/665c2da036024c9f81f552e16626fbdc/data">
           <p>
-            Use the Search widget in the top-left corner to locate an area using Esri's 
-            geocoding service. Zoom with the widgets ( + and - ) on the left hand side. 
-            Alternatively, click and drag the map to an area of interest and scroll with 
-            your mouse or track pad to zoom in or out.
+            You may Zoom into the map using the widgets (+ and -) on the left side of the screen 
+            or using the mouse wheel and then click and drag the map to an area of interest. 
+            Alternatively, you can use the Search widget in the top-left corner to locate an area 
+            by name. 
           </p>
-          <li>Draw the perimeter of your fire on the map</li>
+          <li>Draw the fire perimeter on the map</li>
           <img src="https://isu.maps.arcgis.com/sharing/rest/content/items/fcc17d455eb747dea7cfc9c258d8c7f1/data">
           <p>
-            Click the New Feature button underneath Create features in the Editor widget.
+            Click the New Feature button beneath Create features in the Editor widget.
             When activated, the New Feature button will show a blue bar on its left border. 
             This button allows you to click on the map and place vertices. Place vertices 
-            until your fire perimeter has been drawn. Double-click on the last vertex to 
-            finish drawing your fire perimeter.
+            around the fire edge (perimeter) until the fire polygon has been completed. Double-click 
+            the last vertex to finish drawing the fire polygon.
           </p>
-          <li>Fill out fire information</li>
+          <li>Add fire information</li>
           <img src="https://isu.maps.arcgis.com/sharing/rest/content/items/e37dfc3a078f4359a13626f5fdbee499/data">
           <p>
             A finished fire perimeter is indicated by the orange and white adjustment box
-            around the new shape. You can discard your shape at any time after you finish
-            drawing by clicking the back arrow in the top left corner of the Editor widget.
-            These squares and circle (called adjustment handles) can be clicked and dragged 
-            to adjust the width, height, and rotation of the shape.The editor widget will 
-            also switch to the Community Fire Submission Form. Fill out the Fire Information 
-            part of the form. Note the Fire Name field is required. The default year is the 
-            current year but can be adjusted using the arrows. The Unique ID is automatically 
-            generated based on fire name, year, and location. The Location information is 
-            automatically generated based on where the fire perimeter is drawn. Automatically 
-            generated fields are not editable. 
+            around the new polygon (Note: you can discard your shape at any time after you finish
+            drawing by clicking the back arrow in the top left corner of the Editor widget). At this
+            time, the editor widget will switch to the Community Fire Submissions Form. Fill out the Fire Information 
+            part of the form completely. The default year is the current year but can be adjusted at this time. 
+            The Unique ID is automatically generated based on the fire name, year, and general geographic location of the fire polygon. 
+            Automatically generated fields such as Unique ID are not editable. 
           </p>
-          <li>Fill out submitter information</li>
+          <li>Add submitter information</li>
           <img src="https://isu.maps.arcgis.com/sharing/rest/content/items/99b98740e11c42f291519e04ea00ef28/data">
           <p>
-            This form requires First and Last Name and a valid email address. These fields are
-            not displayed in the map. They are used internally in case there are issues
-            and the RECOVER team needs to reach out for clarification. Note there is a field 
-            that checks validity of the Email Address field. The provided email address *must*
-            be valid, otherwise the shape will not be included in RECOVER 2.0. The submitter may
-            optionally fill out the Organization field. 
+            This form requires a First and Last Name as well as a valid email address. These fields are
+            not displayed in the map but are used internally in case there are issues
+            and the RECOVER team needs to contact you for clarification. The provided email address must
+            be valid, otherwise the new fire will not be included in RECOVER 2.0. The submitter may
+            optionally complete the Organization field. 
           </p>
-          <li>Create new submitted fire feature</li>
+          <li>Finalize the new submission</li>
           <img src="https://isu.maps.arcgis.com/sharing/rest/content/items/bfdbeb2aacdc4197af2ecc1834fca10a/data">
           <p>
-            Click the blue Create button to finish your submitted fire! The data package 
+            Click the blue Create button to finish your submission! The data package 
             will be created the next time RECOVER's Large Fire Trigger runs. Submitted fires 
             will typically be available the day following submission.
           </p>
