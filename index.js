@@ -1,5 +1,6 @@
 
 // Imports
+import esriConfig from "@arcgis/core/config.js";
 import WebMap from '@arcgis/core/WebMap.js';
 import MapView from '@arcgis/core/views/MapView.js';
 import Search from "@arcgis/core/widgets/Search.js";
@@ -217,6 +218,7 @@ const fireFormTemplate = new FormTemplate({
 });
 
 // Access webmap, set view, add editor widget
+esriConfig.apiKey = "AAPK423affd003ff4318b71f02e00fc6a3acnZSab_6W0_qFoTc7xiALo9tGF8k8TsK-LAI8a0-U5mIWjvv1Pn6f19gO_oO4gk6U";
 const webmap = new WebMap({
     portalItem: {
         id: "0c8e1fd68b2449cfb891b7f9ba314e80"
