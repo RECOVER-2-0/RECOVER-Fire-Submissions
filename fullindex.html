@@ -201,6 +201,8 @@
           processed by RECOVER and made available for download in the RECOVER Dashboard by the following day.
         </p>
         <h3>FAQ</h3>
+        <!-- Not accepting file submissions -->
+        <!--
         <h4>Q: What if I already have a shapefile of a fire I would like to submit?</h4>
         <p>
           A: As long as you have an ArcGIS Online account, you can submit a fire perimeter shape you have 
@@ -208,6 +210,13 @@
           Excel, file geodatabase (zipped), GeoJSON, and OGC GeoPackage files. Instructions for appending data 
           to the Community Fire Submissions hosted feature layer by uploading an acceptable format can be found 
           here.
+        </p>
+        -->
+        <h4>Q: Are there any restrictions on the size of the fire I can submit?</h4>
+        <p>
+          A: RECOVER can process submitted fires up to 10,000 acres in size. Larger fires than this will not be 
+          included in RECOVER and will be removed. If you need a data package created for a fire that is larger 
+          than 10,000 acres, please <a href="mailto:keithweber@isu.edu">contact the RECOVER team</a>. 
         </p>
         <h4>Q: Why can't I submit a fire outside of the contiguous western United States? </h4>
         <p>
@@ -269,6 +278,7 @@
     <script src="https://js.arcgis.com/4.26/"></script>
     <script>
     require([ 
+        "esri/config",
         "esri/WebMap", 
         "esri/views/MapView", 
         "esri/widgets/Search", 
@@ -284,6 +294,7 @@
         "esri/widgets/LayerList", 
         "esri/widgets/Expand" 
     ], (
+        esriConfig,
         WebMap, 
         MapView, 
         Search, 
@@ -503,6 +514,7 @@
         });
 
         // Access webmap, set view, add editor widget
+        esriConfig.apiKey = "AAPK423affd003ff4318b71f02e00fc6a3acnZSab_6W0_qFoTc7xiALo9tGF8k8TsK-LAI8a0-U5mIWjvv1Pn6f19gO_oO4gk6U";
         const webmap = new WebMap({
             portalItem: {
                 id: "0c8e1fd68b2449cfb891b7f9ba314e80"
