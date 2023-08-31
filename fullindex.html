@@ -278,7 +278,6 @@
     <script src="https://js.arcgis.com/4.26/"></script>
     <script>
     require([ 
-        "esri/config",
         "esri/WebMap", 
         "esri/views/MapView", 
         "esri/widgets/Search", 
@@ -294,7 +293,6 @@
         "esri/widgets/LayerList", 
         "esri/widgets/Expand" 
     ], (
-        esriConfig,
         WebMap, 
         MapView, 
         Search, 
@@ -514,7 +512,6 @@
         });
 
         // Access webmap, set view, add editor widget
-        esriConfig.apiKey = "AAPK423affd003ff4318b71f02e00fc6a3acnZSab_6W0_qFoTc7xiALo9tGF8k8TsK-LAI8a0-U5mIWjvv1Pn6f19gO_oO4gk6U";
         const webmap = new WebMap({
             portalItem: {
                 id: "0c8e1fd68b2449cfb891b7f9ba314e80"
